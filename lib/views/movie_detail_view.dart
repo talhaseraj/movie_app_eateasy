@@ -166,7 +166,7 @@ class MovieDetailView extends StatelessWidget {
                               ),
                             );
                           }),
-                    )
+                    ),
                 ],
               ),
             );
