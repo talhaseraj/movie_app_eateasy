@@ -37,7 +37,7 @@ class ApiService {
 
   Future<CastDetails> fetchMovieCast(int id) async {
     final response =
-        await http.get(Uri.parse('$baseUrl/movie/credits$id?api_key=$apiKey'));
+        await http.get(Uri.parse('$baseUrl/movie/$id/credits?api_key=$apiKey'));
     print("response: " + response.body);
     if (response.statusCode == 200) {
       return castDetailsFromJson(response.body);

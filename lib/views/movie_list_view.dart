@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app_eateasy/controllers/movie_list_view_controller.dart';
 import 'package:movie_app_eateasy/movieapp_theme.dart';
+import 'package:movie_app_eateasy/utils/helpers.dart';
 
 import 'movie_detail_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -39,22 +40,34 @@ class MovieListView extends StatelessWidget {
       body: GetBuilder<MovieListViewController>(
         init: MovieListViewController(),
         builder: (_) {
+          if (!_.internet) {
+            return Text("no internet");
+          }
           if (_.isLoading && _.movies.isEmpty) {
             return Center(child: CircularProgressIndicator());
           }
           return ListView(
             controller: _.scrollController,
-            children: List.from(_.movies.map((movie) => ListTile(
+            children: List.from(
+              _.movies.map(
+                (movie) => ListTile(
                   title: Text(movie.title ?? ""),
                   subtitle: Text('Rating: ${movie.voteAverage}'),
-                  leading: CachedNetworkImage(
-                    imageUrl:
-                        'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                    progressIndicatorBuilder: (ctx, str, indicator) {
-                      return CupertinoActivityIndicator();
-                    },
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Hero(
+                      tag: movie.id.toString(),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                        progressIndicatorBuilder: (ctx, str, indicator) {
+                          return CupertinoActivityIndicator();
+                        },
+                      ),
+                    ),
                   ),
                   onTap: () {
+                    Helpers.addLoadingOverlay(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -62,7 +75,9 @@ class MovieListView extends StatelessWidget {
                       ),
                     );
                   },
-                ))),
+                ),
+              ),
+            ),
           );
         },
       ),

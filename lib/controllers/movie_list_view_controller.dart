@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app_eateasy/utils/helpers.dart';
 
 import '../models/movies_list_response.dart';
 import '../services/api_service.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +16,7 @@ class MovieListViewController extends GetxController {
   List<int> watchlistMovieIds = [];
   int currentPage = 1;
   bool isLoading = true;
+  bool internet = true;
 
   @override
   void onInit() {
@@ -31,6 +32,11 @@ class MovieListViewController extends GetxController {
     });
 
     super.onInit();
+  }
+
+  checkInternet() async {
+    internet = await Helpers.checkInternetConnectionStatus();
+    update();
   }
 
   Future<void> fetchMovies() async {
