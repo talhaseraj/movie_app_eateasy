@@ -76,31 +76,43 @@ class MovieListView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final movie = _.movies
                           .firstWhere((e) => e.id == _.favoriteMovieIds[index]);
-                      return SizedBox(
-                        width: 100,
-                        height: 200,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 140,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                      return InkWell(
+                        onTap: () {
+                          Helpers.addLoadingOverlay(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MovieDetailView(movie: movie),
+                            ),
+                          );
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          height: 200,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 140,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                  ),
                                 ),
                               ),
-                            ),
-                            Spacer(),
-                            Text(
-                              movie.title.toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "(${movie.releaseDate!.year})",
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
+                              Spacer(),
+                              Text(
+                                movie.title.toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "(${movie.releaseDate!.year})",
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     }),
@@ -130,31 +142,43 @@ class MovieListView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final movie = _.movies.firstWhere(
                           (e) => e.id == _.watchlistMovieIds[index]);
-                      return SizedBox(
-                        width: 100,
-                        height: 200,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 140,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                      return InkWell(
+                        onTap: () {
+                          Helpers.addLoadingOverlay(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MovieDetailView(movie: movie),
+                            ),
+                          );
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          height: 200,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 140,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                  ),
                                 ),
                               ),
-                            ),
-                            Spacer(),
-                            Text(
-                              movie.title.toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "(${movie.releaseDate!.year})",
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
+                              Spacer(),
+                              Text(
+                                movie.title.toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "(${movie.releaseDate!.year})",
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     }),
